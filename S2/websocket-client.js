@@ -9,6 +9,26 @@ document.forms[0].onsubmit = ()=>{
 
 };
 
+WS.onopen = ()=>{
+
+    console.log('CONNECTION OPEN');
+    displayTitle('CONNECTION OPEN');
+
+};
+
+function displayTitle(title){
+
+        document.querySelector('h1').innerHTML = title;
+};
+
+
+WS.onclose = ()=>{
+
+    console.log('CONNECTION CLOSED');
+    displayTitle('CONNECTION CLOSED');
+};
+
+
 
 WS.onmessage = (payload) => {
 
