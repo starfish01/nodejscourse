@@ -6,6 +6,12 @@ WSS.on('connection',(ws)=>{
 
     ws.on('message', (message)=>{
 
+        if(message === 'close'){
+            ws.close();
+        }else{
+
+        
+
         // for (i = 0; i < 5; i++) { 
         //     message += ` ${i}`;
         // }
@@ -20,10 +26,10 @@ WSS.on('connection',(ws)=>{
 
         });
 
-        console.log(message);
+        //console.log(message);
 
         
-        
+        }
 
 
 
