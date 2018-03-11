@@ -21,7 +21,10 @@ MongoClient.connect('mongodb://localhost:27017/', function (err, client) {
   const db = client.db('animals');
 
     db.collection('mammals').insertOne({
-        name: 'horse'    
+        name: 'horse' 
+        
+        
+
     }, (err, result)=>{
         if(err){ return console.log(err)};
         console.log('INSERTED');
@@ -29,9 +32,9 @@ MongoClient.connect('mongodb://localhost:27017/', function (err, client) {
 
 
 
-//   db.collection('mammals').find().toArray(function (err, result) {
-//     if (err) throw err
+  db.collection('mammals').find().toArray(function (err, result) {
+    if (err) throw err
 
-//     console.log(result)
-//   })
+    console.log(result)
+  })
 })
