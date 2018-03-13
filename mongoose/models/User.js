@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const User = mongoose.model('users', {
+const UserSchema = new Schema({
 
     firstName: {
         type: String,
@@ -15,10 +16,10 @@ const User = mongoose.model('users', {
         trim: true
     },
     isActive:{
-        type: number,
+        type: Number,
         default: 0
     }
 
 });
 
-module.exports = {User};
+module.exports = mongoose.model('users', UserSchema);
