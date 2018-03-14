@@ -49,17 +49,72 @@ app.get('/users', (req,res)=>{
 });
 
 
-app.patch('/users/:id',(req, res)=>{
+// app.patch('/users/:id',(req, res)=>{
     
-    const id = req.params.id;
-    const firstName = req.body.firstName;
+//     const id = req.params.id;
+//     const firstName = req.body.firstName;
 
-    User.findByIdAndUpdate(id, {$set: {firstName: firstName}}, {new: true})
-    .then(savedUser=>{
-        res.status(200).send('Saved by patch');
-        console.log('Saved Via Patch');
+//     User.findByIdAndUpdate(id, {$set: {firstName: firstName}}, {new: true})
+//     .then(savedUser=>{
+//         res.status(200).send('Saved by patch');
+//         console.log('Saved Via Patch');
+//     });
+
+// });
+
+// app.put('/users/:id',(req, res)=>{
+    
+//     const id = req.params.id;
+//     const firstName = req.body.firstName;
+//     const lastName = req.body.lastName;
+    
+
+//     User.findByIdAndUpdate(id, {$set: {firstName: firstName, lastName: lastName}}, {new: true})
+//     .then(savedUser=>{
+//         res.status(200).send('Saved by put');
+//         console.log('Saved Via Put');
+//     });
+
+// });
+
+// app.put('/users/:id',(req, res)=>{
+    
+//         User.findOne({_id: req.params.id}).then(user =>{
+//             user.firstName = req.body.firstName;
+//             user.lastName = req.body.lastName;
+
+//             user.save().then(userSaved=>{
+//                 res.status(200).send(userSaved);
+//             }).catch(err =>{
+//                 console.log(`Error ${err}`)
+//             });
+//         });
+    
+// });
+
+// app.delete('/users/:id',(req, res)=>{
+    
+//     User.findOne({_id: req.params.id}).then(user =>{
+//         user.remove().then(userRemoved => {
+//             res.send(`User deleted`);
+//         })
+        
+//     }).catch(err =>{
+//         console.log(`Failed to delete because ${err}`);
+//         res.send(`User already deleted`)
+//     });
+// });
+
+app.delete('/users/:id',(req, res)=>{
+    
+    User.findByIdAndRemove(req.params.id).then(userRemoved =>{
+            res.send(`User ${userRemoved.firstName} removed`);
+        })
+        
+    .catch(err =>{
+        console.log(`Failed to delete because ${err}`);
+        res.send(`User already deleted`)
     });
-
 });
 
 //patch or put
