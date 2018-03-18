@@ -8,6 +8,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.engine('handlebars', exphbs({defaultLayout: 'home'}));
 app.set('view engine', 'handlebars');
 
+
 const home = require('./routes/home/index');
 const admin = require('./routes/admin/index');
 
