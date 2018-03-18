@@ -8,6 +8,8 @@ const bcrypt = require('bcryptjs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+mongoose.Promise = global.Promise;
+
 
 
 mongoose.connect('mongodb://localhost:27017/login', ()=>{
@@ -39,7 +41,31 @@ app.post('/register',(req,res)=>{
 });
 
 
+app.post('/login', (req, res)=>{
+    User.findOne({email: req.body.email}).then(user=>{
+        
+        if(user){
+            bcrypt.compare(req.body.password, user.password, (err, matched)=>{
+                console.log(req.body.password);
+                console.log(user.password)
+                console.log(matched)
+                console.log(err)
 
+
+                if(err) return err;
+
+                if(matched){
+                    console.log('User was able to login');
+                    res.send('User was able to login')
+                }else{
+                   console.log('user was unable to login')
+                    res.send('user was not able to login')
+                }
+
+            });
+        }
+    });
+});
 
 
 
