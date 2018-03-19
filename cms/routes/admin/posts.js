@@ -14,4 +14,10 @@ router.get('/create', (req, res)=>{
     res.render('admin/posts/create');
 });
 
+router.post('/create', (req, res)=>{
+    res.send('it');
+});
+
+
+
 module.exports = router;
