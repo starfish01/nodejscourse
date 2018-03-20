@@ -11,10 +11,20 @@ router.all('/*', (req, res, next)=>{
 router.get('/', (req, res)=>{
 
     Post.find({}).then(posts=>{
-        res.render('admin/posts/index', {posts: posts});
+        res.render('admin/posts/index', {posts: posts})
     }).catch(err=>{
         console.log(err);
         res.render('admin/posts/index');
+    });
+});
+
+router.get('/edit/:id', (req,res)=>{
+
+    Post.findById(req.params.id).then(post=>{
+        res.render('admin/posts/edit', {post: post});
+    }).catch(err=>{
+        console.log(`Could not find Post in DB ${err}`)
+        res.render('admin/posts/');
     });
 
     
@@ -26,10 +36,20 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', (req, res)=>{
 
+    var allowComments;
+
+    if(req.body.allowComments){
+        allowComments = true;
+    }else{
+        allowComments = false;
+    }
+
+    console.log(allowComments);
+
     const newPost = new Post({
         title: req.body.title,
         status: req.body.status,
-        allowComments: req.body.allowComments,
+        allowComments: allowComments,
         body: req.body.body
 
     });

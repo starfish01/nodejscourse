@@ -12,11 +12,12 @@ const PostSchema = new Schema({
 
     status:{
         type:String,
+        required: true,
         default: 'public'
     },
 
     allowComments:{
-        default: false,
+        required: true,
         type:Boolean
     },
 
