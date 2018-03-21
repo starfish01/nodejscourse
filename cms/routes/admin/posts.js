@@ -62,8 +62,10 @@ router.post('/create', (req, res)=>{
         console.log(err);
     });
 
+});
 
-
+router.put('/edit/:id', (req, res)=>{
+    res.send('it works');
 });
 
 

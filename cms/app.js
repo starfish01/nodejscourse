@@ -4,6 +4,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 
 mongoose.Promise = global.Promise;
@@ -28,6 +29,9 @@ app.set('view engine', 'handlebars');
 //body parser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+//method override
+app.use(methodOverride('_method'));
 
 
 //load routes

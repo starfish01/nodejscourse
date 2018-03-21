@@ -1,6 +1,6 @@
 <h1>Edit Posts</h1>
 
-<form action="/admin/posts/edit" method="post" >
+<form action="/admin/posts/edit/{{post.id}}?_method=PUT" method="post" >
 
     <div class="form-group">
         <label for="title">Title</label>
@@ -10,17 +10,20 @@
     <div class="form-group">
         <label for="status">Status</label>
         <select name="status" id="status" class="form-control">
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-            <option value="draft">Draft</option>
+            {{#select post.status}} 
+                <option value="public">Public</option>
+                <option value="private">Private</option>
+                <option value="draft">Draft</option>
+            {{/select}}
         </select>
     </div>
 
-    {{#select post.status}} {{/select}}
 
      <div class="form-check">
-         <label  for="allowComments">Allow Comments</label>
+         <label class="form-check-label" for="allowComments">
         <input name="allowComments" type="checkbox" {{#if post.allowComments}}checked="checked"{{/if}} class="form-check-input" id="allowComments">
+        Allow Comments
+        </label>
     </div>
 
     <div class="form-group">
