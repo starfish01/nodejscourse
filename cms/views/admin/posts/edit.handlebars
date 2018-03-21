@@ -4,7 +4,7 @@
 
     <div class="form-group">
         <label for="title">Title</label>
-        <input name="title" type="text" class="form-control" id="title" value="{{title}}"  >
+        <input name="title" type="text" class="form-control" id="title" value="{{post.title}}"  >
     </div>
 
     <div class="form-group">
@@ -16,15 +16,16 @@
         </select>
     </div>
 
+    {{#select post.status}} {{/select}}
 
      <div class="form-check">
          <label  for="allowComments">Allow Comments</label>
-        <input name="allowComments" type="checkbox" class="form-check-input" id="allowComments">
+        <input name="allowComments" type="checkbox" {{#if post.allowComments}}checked="checked"{{/if}} class="form-check-input" id="allowComments">
     </div>
 
     <div class="form-group">
         <label for="body">Body</label>
-        <textarea name="body" type="text" cols="30" rows="10" class="form-control" id="body">{{body}}</textarea>
+        <textarea name="body" type="text" cols="30" rows="10" class="form-control" id="body">{{post.body}}</textarea>
     </div>
      
     <button type="submit" class="btn btn-primary">Submit</button>
