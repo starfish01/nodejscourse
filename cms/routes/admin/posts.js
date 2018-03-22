@@ -36,6 +36,8 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', (req, res)=>{
 
+    console.log(req.files);
+
     var allowComments;
 
     if(req.body.allowComments){
@@ -44,7 +46,7 @@ router.post('/create', (req, res)=>{
         allowComments = false;
     }
 
-    console.log(allowComments);
+
 
     const newPost = new Post({
         title: req.body.title,
