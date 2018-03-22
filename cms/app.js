@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const upload = require('express-fileupload');
 
 
 mongoose.Promise = global.Promise;
@@ -25,6 +26,9 @@ const {select} = require('./helpers/handlebars-helpers');
 
 app.engine('handlebars', exphbs({defaultLayout: 'home', helpers: {select: select}}));
 app.set('view engine', 'handlebars');
+
+//fileupload
+app.use(upload());
 
 //body parser
 app.use(bodyParser.urlencoded({extended: true}));

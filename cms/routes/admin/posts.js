@@ -65,9 +65,49 @@ router.post('/create', (req, res)=>{
 });
 
 router.put('/edit/:id', (req, res)=>{
-    res.send('it works');
+
+    var allowComments;
+
+    if(req.body.allowComments){
+        allowComments = true;
+    }else{
+        allowComments = false;
+    }
+
+
+
+    Post.findById(req.params.id).then(post=>{
+
+        post.title = req.body.title;
+        post.allowComments = allowComments;
+        post.status = req.body.status;
+        post.body = req.body.body;
+
+        post.save().then(updaterPost=>{
+            res.redirect('/admin/posts');
+        });
+
+    }).catch(err=>{
+        console.log(`Could not find Post in DB ${err}`)
+        res.render('admin/posts/');
+    });
+
 });
 
+
+router.delete('/:id',(req,res)=>{
+
+    // Post.findByIdAndRemove(req.params.id, (err, document)=>{
+    //     if(err) return err;
+    //     res.redirect('/admin/posts/create');
+
+    // });
+
+    Post.remove({_id:req.params.id}).then(result=>{
+        res.redirect('/admin/posts');
+    });
+
+});
 
 
 module.exports = router;
