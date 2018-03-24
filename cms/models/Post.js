@@ -26,7 +26,7 @@ const PostSchema = new Schema({
         type:String
     },
 
-    body:{
+    file:{
         type:String
     }
 

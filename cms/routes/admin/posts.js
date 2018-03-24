@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../models/Post');
+const{isEmpty} = require('../../helpers/upload-helper');
 
 
 router.all('/*', (req, res, next)=>{
@@ -36,17 +37,20 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', (req, res)=>{
 
+    let filename ='';
 
-    
+    if(!isEmpty(req.files)){
 
-    let file = req.files.file;
-    let filename = file.name;
+        console.log('not empty')
 
-    file.mv('./public/uploads/' + filename, (err)=>{
-        if(err) throw err;
-    });
+        let file = req.files.file;
+        filename = file.name;
 
-    console.log(filename);
+        file.mv('./public/uploads/' + filename, (err)=>{
+            if(err) throw err;
+        });
+    }
+
 
     var allowComments;
 
@@ -62,7 +66,8 @@ router.post('/create', (req, res)=>{
         title: req.body.title,
         status: req.body.status,
         allowComments: allowComments,
-        body: req.body.body
+        body: req.body.body,
+        file: filename
 
     });
 
