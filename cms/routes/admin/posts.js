@@ -36,7 +36,17 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', (req, res)=>{
 
-    console.log(req.files);
+
+    
+
+    let file = req.files.file;
+    let filename = file.name;
+
+    file.mv('./public/uploads/' + filename, (err)=>{
+        if(err) throw err;
+    });
+
+    console.log(filename);
 
     var allowComments;
 
@@ -57,7 +67,6 @@ router.post('/create', (req, res)=>{
     });
 
     newPost.save().then(savedPost =>{
-        console.log(savedPost);
         res.redirect('/admin/posts/create');
     }).catch(err =>{
         res.redirect('/admin/posts/create');

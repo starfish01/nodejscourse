@@ -24,6 +24,10 @@ const PostSchema = new Schema({
     body:{
         required:true,
         type:String
+    },
+
+    body:{
+        type:String
     }
 
 });
