@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../models/Post');
-const{isEmpty} = require('../../helpers/upload-helper');
+const{isEmpty, uploadDir} = require('../../helpers/upload-helper');
+const fs = require('fs');
+const path = require('path');
 
 
 router.all('/*', (req, res, next)=>{
@@ -44,7 +46,7 @@ router.post('/create', (req, res)=>{
         console.log('not empty')
 
         let file = req.files.file;
-        filename = file.name;
+        filename = Date.now() + '-' +file.name;
 
         file.mv('./public/uploads/' + filename, (err)=>{
             if(err) throw err;
@@ -119,7 +121,15 @@ router.delete('/:id',(req,res)=>{
 
     // });
 
-    Post.remove({_id:req.params.id}).then(result=>{
+    Post.findOne({_id:req.params.id}).then(post=>{
+        
+        fs.unlink(uploadDir + post.file, (err)=>{
+            post.remove();
+            //req.flash('success_message', 'post was successfully deleted');
+            //res.redirect('/admin/posts');
+        });
+
+        
         res.redirect('/admin/posts');
     });
 
