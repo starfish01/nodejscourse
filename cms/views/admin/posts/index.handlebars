@@ -1,5 +1,13 @@
 <h1>All posts</h1>
 
+{{#if success_message}}
+    <div class="alert alert-danger">
+    {{success_message}}
+    </div>
+
+{{/if}}
+
+
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -15,7 +23,7 @@
         {{#each posts}}
         <tr>
             <td>{{id}}</td>
-            <td>{{# if file}} <img src="/uploads/{{file}}" class="img-rounded" height="200">{{/if}}</td>
+            <td>{{# if file}} <img src="/uploads/{{file}}" class="img-rounded" height="50">{{/if}}</td>
             <td>{{title}}</td>
             <td>{{status}}</td>
             <td>{{allowComments}}</td>

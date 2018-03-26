@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const upload = require('express-fileupload');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 
 mongoose.Promise = global.Promise;
@@ -14,6 +16,9 @@ mongoose.connect('mongodb://localhost/cms').then((db)=>{
 }).catch(err =>{
     console.log(err);
 });
+
+
+
 
 
 
@@ -36,6 +41,23 @@ app.use(bodyParser.json());
 
 //method override
 app.use(methodOverride('_method'));
+
+
+app.use(session({
+    secret: 'patrickKey',
+    resave:true,
+    saveUninitialized:true
+}));
+
+app.use(flash());
+
+//local var using middle ware
+
+app.use((req, res, next)=>{
+    res.locals.success_message = req.flash('success_message');
+
+    next();
+});
 
 
 //load routes

@@ -39,11 +39,29 @@ router.get('/create', (req, res)=>{
 
 router.post('/create', (req, res)=>{
 
+    let errors = [];
+
+
+    if(!req.body.title){
+        errors.push({message:'please add a title'});
+    }
+    if(!req.body.body){
+        errors.push({message:'please add a body'});
+    }
+
+
+    if(errors.length > 0){
+        res.render('admin/posts/create',{
+            errors: errors
+        })
+    }else{
+
+    
+
+
     let filename ='';
 
     if(!isEmpty(req.files)){
-
-        console.log('not empty')
 
         let file = req.files.file;
         filename = Date.now() + '-' +file.name;
@@ -74,11 +92,18 @@ router.post('/create', (req, res)=>{
     });
 
     newPost.save().then(savedPost =>{
-        res.redirect('/admin/posts/create');
+
+        req.flash('success_message', 'Post was created successfully' + savedPost.title);
+
+        res.redirect('/admin/posts');
     }).catch(err =>{
+
+
         res.redirect('/admin/posts/create');
         console.log(err);
     });
+
+}
 
 });
 
