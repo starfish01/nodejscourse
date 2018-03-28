@@ -5,7 +5,6 @@ const{isEmpty, uploadDir} = require('../../helpers/upload-helper');
 const fs = require('fs');
 const path = require('path');
 
-
 router.all('/*', (req, res, next)=>{
     req.app.locals.layout = 'admin';
     next();
@@ -169,7 +168,7 @@ router.delete('/:id',(req,res)=>{
 
         req.flash('success_message', `Post was deleted successfully`);
         res.redirect('/admin/posts');
-        
+
     }).catch(err =>{
         console.log(`Something went wrong while deleting ${err}`)
         res.render('admin/posts/');

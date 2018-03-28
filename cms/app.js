@@ -26,10 +26,10 @@ app.use(express.static(path.join(__dirname,'public')));
 
 //set view engine
 
-const {select} = require('./helpers/handlebars-helpers');
+const {select, GenerateTime} = require('./helpers/handlebars-helpers');
 
 
-app.engine('handlebars', exphbs({defaultLayout: 'home', helpers: {select: select}}));
+app.engine('handlebars', exphbs({defaultLayout: 'home', helpers: {select: select, GenerateTime: GenerateTime}}));
 app.set('view engine', 'handlebars');
 
 //fileupload
