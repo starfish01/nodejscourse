@@ -9,19 +9,22 @@ router.all('/*', (req, res, next)=>{
 
 
 router.get('/', (req, res)=>{
-    res.render('admin/categories/index');
+
+
+    Category.find({}).then(categories =>{
+
+        res.render('admin/categories/index', {categories: categories});
+    }).catch(err=>{
+        req.flash('success_message', `There are no Categories`);
+        res.render('admin/categories/index');
+    });
+
+    
 });
 
 router.post('/create', (req, res)=>{
 
-    
-
-    console.log(req.body.title);
-
-    if(!req.body.title){
-
-        //need to fix this
-        //errors.push({message:'Please add a title'});
+    if(!req.body.name){
 
         res.redirect('/admin/categories/');
         
@@ -29,22 +32,47 @@ router.post('/create', (req, res)=>{
     }else{
 
         const newCategory = new Category({
-            title: req.body.title
+            name: req.body.name
         });
     
         newCategory.save().then(savedCategory =>{
-    
-            req.flash('success_message', `Post ${savedCategory.title} was created successfully`);
+
+            req.flash('success_message', `${savedCategory.name} was created successfully`);
             res.redirect('/admin/categories/');
-    
         }).catch(err =>{
-    
-    
+
             res.redirect('/admin/categories/');
             console.log(err);
         });
 
     }
+
+});
+
+router.delete('/:id',(req,res)=>{
+
+    Category.findById(req.params.id).then(category=>{
+        
+        res.redirect('/admin/categories/edit/', {category:category});
+
+    }).catch(err=>{
+        req.flash('success_message', `Something broke...`);
+        res.redirect('/admin/categories/');
+    });
+
+});
+
+router.delete('/:id',(req,res)=>{
+
+    Category.findById(req.params.id).then(category=>{
+        category.remove();
+        req.flash('success_message', `Category was deleted`);
+        res.redirect('/admin/categories/');
+
+    }).catch(err=>{
+        req.flash('success_message', `Category was not deleted ${err}`);
+        res.redirect('/admin/categories/');
+    });
 
 });
 

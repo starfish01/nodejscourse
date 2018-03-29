@@ -21,11 +21,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>id9579</td>
-                    <td>JAVA</td>
-                    <td>12/8/9</td>
-                </tr>
+                {{#each categories}}
+                    <tr>
+                        <td>{{id}}</td>
+                        <td>{{name}}</td>
+                        <td>{{GenerateTime date 'LLL'}}</td>
+                        <td>
+                            <form action="/admin/categories/{{id}}?_method=PATCH" method="POST">
+                                <button class="btn btn-warning">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/admin/categories/{{id}}?_method=DELETE" method="POST">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                {{/each}}
             </tbody>
 
         </table>

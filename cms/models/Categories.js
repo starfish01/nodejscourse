@@ -3,11 +3,16 @@ const Schema = mongoose.Schema;
 
 const CategoriesSchema = new Schema({
     
-    title:{
+    name:{
         type: String,
         trim: true,
         required: true
     },
+
+    date:{
+        type:Date,
+        default:Date.now()
+    }
 
 });
 
