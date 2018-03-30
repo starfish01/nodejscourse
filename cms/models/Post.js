@@ -26,6 +26,12 @@ const PostSchema = new Schema({
         type:String
     },
 
+    category:{
+        required:true,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Categories'
+    },
+
     file:{
         type:String
     },

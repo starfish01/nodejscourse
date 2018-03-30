@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../models/Post');
+const Categories = require('../../models/Categories');
 const{isEmpty, uploadDir} = require('../../helpers/upload-helper');
 const fs = require('fs');
 const path = require('path');
@@ -22,18 +23,27 @@ router.get('/', (req, res)=>{
 
 router.get('/edit/:id', (req,res)=>{
 
-    Post.findById(req.params.id).then(post=>{
-        res.render('admin/posts/edit', {post: post});
-    }).catch(err=>{
-        console.log(`Could not find Post in DB ${err}`)
-        res.render('admin/posts/');
+    Categories.find({}).then(categories =>{
+
+        Post.findById(req.params.id).then(post=>{
+            res.render('admin/posts/edit', {post: post, categories:categories});
+        }).catch(err=>{
+            console.log(`Could not find Post in DB ${err}`)
+            res.render('admin/posts/');
+        });
+
     });
 
     
 });
 
 router.get('/create', (req, res)=>{
-    res.render('admin/posts/create');
+
+    Categories.find({}).then(categories =>{
+        res.render('admin/posts/create', {categories: categories});
+    });
+
+
 });
 
 router.post('/create', (req, res)=>{
@@ -86,6 +96,7 @@ router.post('/create', (req, res)=>{
         status: req.body.status,
         allowComments: allowComments,
         body: req.body.body,
+        category: req.body.category,
         file: filename
 
     });
@@ -123,6 +134,7 @@ router.put('/edit/:id', (req, res)=>{
         post.title = req.body.title;
         post.allowComments = allowComments;
         post.status = req.body.status;
+        post.category = req.body.category,
         post.body = req.body.body;
 
 

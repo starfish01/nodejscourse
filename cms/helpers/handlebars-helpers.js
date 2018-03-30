@@ -1,4 +1,6 @@
 const moment = require('moment');
+const Post = require('../models/Post');
+const Categories = require('../models/Categories');
 
 
 module.exports = {
@@ -11,6 +13,18 @@ module.exports = {
 
     GenerateTime: function(date, format){
         return moment(date).format(format)
+    },
+
+    getCategoryName: function(id){
+
+        Categories.findById(id).then(category=>{
+            console.log(category.name);
+            return category.name;
+        }).catch(err =>{
+           
+            return;
+        });
+
     }
 
 

@@ -27,9 +27,7 @@
                         <td>{{name}}</td>
                         <td>{{GenerateTime date 'LLL'}}</td>
                         <td>
-                            <form action="/admin/categories/{{id}}?_method=PATCH" method="POST">
-                                <button class="btn btn-warning">Edit</button>
-                            </form>
+                            <a href="/admin/categories/edit/{{id}}" class="btn btn-warning">Edit</a>
                         </td>
                         <td>
                             <form action="/admin/categories/{{id}}?_method=DELETE" method="POST">

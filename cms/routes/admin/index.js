@@ -37,11 +37,6 @@ router.post('/generate-fake-posts', (req, res)=>{
     });
     }
 
-    
-
-
-
-
 });
 
 

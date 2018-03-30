@@ -49,11 +49,11 @@ router.post('/create', (req, res)=>{
 
 });
 
-router.delete('/:id',(req,res)=>{
 
-    Category.findById(req.params.id).then(category=>{
-        
-        res.redirect('/admin/categories/edit/', {category:category});
+router.get('/edit/:id',(req,res)=>{
+
+    Category.findOne({_id: req.params.id}).then(category=>{
+        res.render('admin/categories/edit', {category:category});
 
     }).catch(err=>{
         req.flash('success_message', `Something broke...`);
@@ -61,6 +61,33 @@ router.delete('/:id',(req,res)=>{
     });
 
 });
+
+router.put('/edit/:id', (req, res)=>{
+
+    console.log("hello");
+
+    Category.findById(req.params.id).then(category=>{
+
+        category.name = req.body.name;
+        
+
+        category.save().then(updaterCategory=>{
+            req.flash('success_message', `Category '${updaterCategory.name}' was updated successfully`);
+            res.redirect('/admin/categories/');
+
+        });
+
+    }).catch(err=>{
+        console.log(`Could not find Post in DB ${err}`)
+        res.render('admin/posts/');
+    });
+
+
+
+
+});
+
+
 
 router.delete('/:id',(req,res)=>{
 

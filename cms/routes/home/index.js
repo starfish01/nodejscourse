@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../../models/Post')
+const Post = require('../../models/Post');
+const Categories = require('../../models/Categories');
+
 
 router.all('/*', (req, res, next)=>{
     req.app.locals.layout = 'home';
@@ -11,9 +13,15 @@ router.all('/*', (req, res, next)=>{
 router.get('/', (req, res)=>{
 
     Post.find({}).then(posts=>{
+        
+        Categories.find({}).then(categories=>{
 
-        res.render('home/index', {posts: posts});
+            res.render('home/index', {posts: posts, categories:categories});
+
+        });
+        
     });
+
     
 });
 
@@ -23,7 +31,6 @@ router.get('/post/:id', (req, res)=>{
         res.render('home/post',{post:post});
     });
 
-    //res.render('home/post');
 });
 
 router.get('/about', (req, res)=>{
