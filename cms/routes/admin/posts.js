@@ -13,7 +13,11 @@ router.all('/*', (req, res, next)=>{
 
 router.get('/', (req, res)=>{
 
-    Post.find({}).then(posts=>{
+    Post.find({})
+
+    .populate('category')
+    
+    .then(posts=>{
         res.render('admin/posts/index', {posts: posts})
     }).catch(err=>{
         console.log(err);

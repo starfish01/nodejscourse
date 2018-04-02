@@ -12,14 +12,13 @@ router.all('/*', (req, res, next)=>{
 
 router.get('/', (req, res)=>{
 
-    Post.find({}).then(posts=>{
+    Post.find({})
+    
+    .populate('category')
+    .then(posts=>{
         
-        Categories.find({}).then(categories=>{
+            res.render('home/index', {posts: posts});
 
-            res.render('home/index', {posts: posts, categories:categories});
-
-        });
-        
     });
 
     

@@ -17,13 +17,17 @@ module.exports = {
 
     getCategoryName: function(id){
 
+        
         Categories.findById(id).then(category=>{
             console.log(category.name);
-            return category.name;
+            catName = category.name;
         }).catch(err =>{
-           
             return;
         });
+
+        console.log(typeof catName);
+
+        return catName;
 
     }
 
