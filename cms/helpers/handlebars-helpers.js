@@ -13,24 +13,7 @@ module.exports = {
 
     GenerateTime: function(date, format){
         return moment(date).format(format)
-    },
-
-    getCategoryName: function(id){
-
-        
-        Categories.findById(id).then(category=>{
-            console.log(category.name);
-            catName = category.name;
-        }).catch(err =>{
-            return;
-        });
-
-        console.log(typeof catName);
-
-        return catName;
-
     }
-
 
 
 };

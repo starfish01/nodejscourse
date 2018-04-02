@@ -56,10 +56,10 @@ router.post('/create', (req, res)=>{
 
 
     if(!req.body.title){
-        errors.push({message:'Please add a title'});
+        errors.push({message:'Please add a title'})
     }
     if(!req.body.body){
-        errors.push({message:'Please add a body'});
+        errors.push({message:'Please add a body'})
     }
 
 
