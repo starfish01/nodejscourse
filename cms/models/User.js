@@ -26,9 +26,10 @@ const UserSchema = new Schema({
         trim: true,
         required: true
     }
-
-    
-
 });
+
+UserSchema.methods.test = function(){
+    console.log('Using schema method');
+};
 
 module.exports = mongoose.model('users', UserSchema);
