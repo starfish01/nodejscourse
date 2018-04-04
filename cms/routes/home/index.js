@@ -58,6 +58,16 @@ passport.use(new LocalStrategy({usernameField: 'email'},(email, password, done)=
 
 }));
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+  });
+  
+  passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
+  });
+
 
 
 router.post('/login', (req, res, next)=>{
@@ -70,6 +80,13 @@ router.post('/login', (req, res, next)=>{
     })(req, res, next);
 
 });
+
+router.get('/logout',(req,res)=>{
+    req.logOut();
+    res.redirect('/login')
+});
+
+
 
 router.get('/register', (req, res)=>{
     res.render('home/register');

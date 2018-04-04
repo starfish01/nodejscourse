@@ -9,6 +9,7 @@ const upload = require('express-fileupload');
 const session = require('express-session');
 const flash = require('connect-flash');
 const {mongoDbUrl} = require('./config/database');
+const passport = require('passport');
 
 
 mongoose.Promise = global.Promise;
@@ -52,11 +53,19 @@ app.use(session({
 
 app.use(flash());
 
+//passport
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 //local var using middle ware
 
 app.use((req, res, next)=>{
+
+    res.locals.user = req.user || null;
     res.locals.success_message = req.flash('success_message');
     res.locals.error_message = req.flash('error_message');
+    res.locals.error = req.flash('error');
     next();
 });
 
