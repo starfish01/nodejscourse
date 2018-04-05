@@ -21,10 +21,20 @@ router.get('/', (req, res)=>{
     .then(comments=>{
         res.render('admin/comments/index', {comments: comments});
     });
-
-    
 });
 
+
+router.delete('/:id',(req,res)=>{
+    
+    Comment.findByIdAndRemove(req.params.id).then(filedeleted=>{
+      
+        req.flash('success_message', `Comment was deleted`);
+
+        res.redirect('/admin/comments');
+        
+    });
+    
+});
 
 
 router.post('/', (req,res)=>{

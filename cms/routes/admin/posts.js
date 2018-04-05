@@ -177,14 +177,29 @@ router.delete('/:id',(req,res)=>{
 
     // });
 
-    Post.findOne({_id:req.params.id}).then(post=>{
+    Post.findOne({_id:req.params.id})
+    .populate('comments')
+    .then(post=>{
+
+        console.log(post)
         
         fs.unlink(uploadDir + post.file, (err)=>{
-            post.remove();
+
+            if(!post.comments.length < 1){
+
+                post.comments.forEach(comment=>{
+                    console.log(comment.body)
+                    comment.remove();
+                })
+            }
+            
+            post.remove().then(postRemoved=>{
+                req.flash('success_message', `Post was deleted successfully`);
+                res.redirect('/admin/posts');
+            });
         });
 
-        req.flash('success_message', `Post was deleted successfully`);
-        res.redirect('/admin/posts');
+        
 
     }).catch(err =>{
         console.log(`Something went wrong while deleting ${err}`)

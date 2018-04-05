@@ -15,7 +15,20 @@
       <th scope="row">{{id}}</th>
       <td>{{user.firstName}}</td>
       <td>{{GenerateTime date 'LLL'}}</td>
-      <td><button class="btn btn-danger">Delete</button></td>
+      <td>
+
+          <form action="/admin/comments/{{id}}?_method=delete" method="POST">
+
+
+
+
+              <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+          
+          
+          
+          
+          </td>
     </tr>
     {{/each}}
   </tbody>

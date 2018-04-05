@@ -43,7 +43,7 @@ const PostSchema = new Schema({
 
     comments:[{
       type:Schema.Types.ObjectId,
-      require:'comments'  
+      ref:'comments'  
     }]
 
 }, {usePushEach: true});
