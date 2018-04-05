@@ -46,7 +46,7 @@ const PostSchema = new Schema({
       require:'comments'  
     }]
 
-});
+}, {usePushEach: true});
 
 module.exports = mongoose.model('Post', PostSchema);
 

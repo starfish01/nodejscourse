@@ -1,0 +1,22 @@
+<h1>comments</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Owner</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+
+      {{#each comments}}
+    <tr>
+      <th scope="row">{{id}}</th>
+      <td>{{user.firstName}}</td>
+      <td>{{GenerateTime date 'LLL'}}</td>
+      <td><button class="btn btn-danger">Delete</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
