@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../models/Post');
+const Comment = require('../../models/Comment');
+
 const Categories = require('../../models/Categories');
 const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
@@ -25,7 +27,10 @@ router.get('/', (req, res)=>{
 
 router.get('/post/:id', (req, res)=>{
 
-    Post.findOne({_id: req.params.id}).then(post =>{
+    Post.findOne({_id: req.params.id})
+    .populate('comments')
+    .then(post =>{
+        console.log(post);
         res.render('home/post',{post:post});
     });
 

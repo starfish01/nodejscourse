@@ -16,7 +16,7 @@ router.all('/*', userAuthenticated, (req, res, next)=>{
 
 router.get('/', (req, res)=>{
 
-    Comment.find({})
+    Comment.find({user: req.user.id})
     .populate('user')
     .then(comments=>{
         res.render('admin/comments/index', {comments: comments});
@@ -28,9 +28,15 @@ router.delete('/:id',(req,res)=>{
     
     Comment.findByIdAndRemove(req.params.id).then(filedeleted=>{
       
-        req.flash('success_message', `Comment was deleted`);
+        Post.findOneAndUpdate({comments: req.params.id}, {$pull: {comments: req.params.id}}, (err, data)=>{
 
-        res.redirect('/admin/comments');
+            if(err) console.log(err);
+
+            req.flash('success_message', `Comment was deleted`);
+            res.redirect('/admin/comments');
+
+        });
+
         
     });
     
@@ -58,6 +64,8 @@ router.post('/', (req,res)=>{
 
     //res.send('we got here');
 });
+
+
 
 
 
