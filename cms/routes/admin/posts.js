@@ -102,7 +102,8 @@ router.post('/create', (req, res)=>{
         allowComments: allowComments,
         body: req.body.body,
         category: req.body.category,
-        file: filename
+        file: filename,
+        user: req.user.id
 
     });
 
@@ -139,8 +140,9 @@ router.put('/edit/:id', (req, res)=>{
         post.title = req.body.title;
         post.allowComments = allowComments;
         post.status = req.body.status;
-        post.category = req.body.category,
+        post.category = req.body.category;
         post.body = req.body.body;
+        post.user = req.user.id;
 
 
         if(!isEmpty(req.files)){

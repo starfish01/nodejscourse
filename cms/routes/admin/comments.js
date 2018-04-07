@@ -19,6 +19,7 @@ router.get('/', (req, res)=>{
     Comment.find({user: req.user.id})
     .populate('user')
     .then(comments=>{
+        console.log(comments);
         res.render('admin/comments/index', {comments: comments});
     });
 });

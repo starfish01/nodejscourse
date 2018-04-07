@@ -28,9 +28,10 @@ router.get('/', (req, res)=>{
 router.get('/post/:id', (req, res)=>{
 
     Post.findOne({_id: req.params.id})
-    .populate('comments')
+    .populate({path:'comments',populate:{path:'user', model: 'users'}})
+    .populate('user')
     .then(post =>{
-        console.log(post);
+       
         res.render('home/post',{post:post});
     });
 

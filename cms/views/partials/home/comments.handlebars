@@ -1,4 +1,6 @@
 {{#if post.allowComments}}
+
+    {{#if user}}
     
           <!-- Comments Form -->
           <div class="card my-4">
@@ -16,6 +18,19 @@
             </div>
           </div>
 
+          {{else}}
+
+        <h4>Please Login To Comment</h4>
+        <br>
+        <form action="/login" method="Get">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <br><hr>
+
+        
+
+    {{/if}}
+
           {{#if post.comments}}
 
 
@@ -24,7 +39,7 @@
           <div class="media mb-4">
             <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
             <div class="media-body">
-              <h5 class="mt-0">{{user}}</h5>
+              <h5 class="mt-0">{{user.firstName}}</h5>
               <h6 class="mt-0">{{GenerateTime date 'LLL'}}</h6>
                 {{body}}
             </div>
@@ -32,6 +47,13 @@
           
         {{/each}}
 
+        
+
           {{/if}}
+
+
+          {{else}}
+
+          <h2>No Comments Allowed on this post</h2>
 
 {{/if}}
