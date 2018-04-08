@@ -66,6 +66,13 @@ router.post('/', (req,res)=>{
     //res.send('we got here');
 });
 
+router.post('/approve-comment', (req, res)=>{
+
+    Comment.findByIdAndUpdate(req.body.id, {$set: {approveComment: req.body.approveComment}}).then(comment=>{
+        
+    });
+});
+
 
 
 
