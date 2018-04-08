@@ -57,6 +57,7 @@ router.post('/', (req,res)=>{
 
         post.save().then(savedPost=>{
             newComment.save().then(savedComment=>{
+                req.flash('success_message','Your comment will be reviewed in a moment');
                 res.redirect(`/post/${post.id}`);
             });
         });
@@ -68,9 +69,13 @@ router.post('/', (req,res)=>{
 
 router.post('/approve-comment', (req, res)=>{
 
-    Comment.findByIdAndUpdate(req.body.id, {$set: {approveComment: req.body.approveComment}}).then(comment=>{
-        
+    Comment.findByIdAndUpdate(req.body.id, {$set: {approveComment: req.body.approveComment}}).then(result=>{
+        res.send(result);
+    }).catch(err=>{ 
+        if(err) return err;
     });
+
+
 });
 
 

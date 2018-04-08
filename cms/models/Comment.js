@@ -19,7 +19,8 @@ const CommentSchema = new Schema({
     },
 
     approveComment:{
-        type: Boolean
+        type: Boolean,
+        default: false
     }
 
 
