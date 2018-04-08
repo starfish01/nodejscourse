@@ -65,7 +65,7 @@ router.get('/edit/:id',(req,res)=>{
 
 router.put('/edit/:id', (req, res)=>{
 
-    console.log("hello");
+
 
     Category.findById(req.params.id).then(category=>{
 

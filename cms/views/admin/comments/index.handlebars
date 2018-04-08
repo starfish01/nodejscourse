@@ -5,6 +5,7 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Owner</th>
+      <th scope="col">Approve Comment</th>
       <th scope="col">Date</th>
     </tr>
   </thead>
@@ -14,6 +15,7 @@
     <tr>
       <th scope="row">{{id}}</th>
       <td>{{user.firstName}}</td>
+      <td><input type="checkbox" name="approveComment"></td>
       <td>{{GenerateTime date 'LLL'}}</td>
       <td>
 

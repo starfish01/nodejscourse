@@ -31,10 +31,20 @@ router.get('/edit/:id', (req,res)=>{
     Categories.find({}).then(categories =>{
 
         Post.findById(req.params.id).then(post=>{
+
+            if(post.user != res.locals.user.id){
+
+                req.flash('error_message', `Post ${post.title} does not belong to you`);
+                res.redirect('/admin/posts');
+    
+            }else{
+
             res.render('admin/posts/edit', {post: post, categories:categories});
+
+            }
         }).catch(err=>{
             console.log(`Could not find Post in DB ${err}`)
-            res.render('admin/posts/');
+            res.render('admin/posts/userposts');
         });
 
     });
@@ -46,6 +56,22 @@ router.get('/create', (req, res)=>{
 
     Categories.find({}).then(categories =>{
         res.render('admin/posts/create', {categories: categories});
+    });
+});
+
+
+
+router.get('/userposts', (req, res)=>{
+
+    Post.find({user: res.locals.user.id})
+
+    .populate('category')
+    
+    .then(posts=>{
+        res.render('admin/posts/userposts', {posts: posts})
+    }).catch(err=>{
+        console.log(err);
+        res.render('admin/posts/userposts');
     });
 
 
@@ -111,7 +137,7 @@ router.post('/create', (req, res)=>{
 
         req.flash('success_message', `Post ${savedPost.title} was created successfully`);
 
-        res.redirect('/admin/posts');
+        res.redirect('/admin/posts/userposts');
     }).catch(err =>{
 
 
@@ -137,6 +163,14 @@ router.put('/edit/:id', (req, res)=>{
 
     Post.findById(req.params.id).then(post=>{
 
+
+        if(post.user != res.locals.user.id){
+
+            req.flash('error_message', `Post ${post.title} does not belong to you`);
+            res.redirect('/admin/posts');
+
+        }else{
+
         post.title = req.body.title;
         post.allowComments = allowComments;
         post.status = req.body.status;
@@ -159,14 +193,16 @@ router.put('/edit/:id', (req, res)=>{
 
         post.save().then(updaterPost=>{
             req.flash('success_message', `Post '${updaterPost.title}' was updated successfully`);
-            res.redirect('/admin/posts');
+            res.redirect('/admin/posts/userposts');
 
         });
+    }
 
     }).catch(err=>{
         console.log(`Could not find Post in DB ${err}`)
         res.render('admin/posts/');
     });
+
 
 });
 
@@ -183,21 +219,21 @@ router.delete('/:id',(req,res)=>{
     .populate('comments')
     .then(post=>{
 
-        console.log(post)
+
         
         fs.unlink(uploadDir + post.file, (err)=>{
 
             if(!post.comments.length < 1){
 
                 post.comments.forEach(comment=>{
-                    console.log(comment.body)
+
                     comment.remove();
                 })
             }
             
             post.remove().then(postRemoved=>{
                 req.flash('success_message', `Post was deleted successfully`);
-                res.redirect('/admin/posts');
+                res.redirect('/admin/posts/userposts');
             });
         });
 

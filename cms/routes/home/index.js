@@ -147,7 +147,7 @@ router.post('/register', (req, res)=>{
         
                     bcrypt.hash(newUser.password, salt, (err, hash)=>{
                         if(err) return;
-                        console.log(hash)
+
                         
                         newUser.password = hash;
         

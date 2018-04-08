@@ -1,4 +1,4 @@
-<h1>All posts</h1>
+<h1>{{user.firstName}} posts</h1>
 
 
 <table class="table table-bordered">
@@ -25,7 +25,15 @@
             <td>{{category.name}}</td>
             <td>{{allowComments}}</td>
             <td><a href="/post/{{id}}">View</a></td>
-            
+            <td>
+                <a href="/admin/posts/edit/{{id}}" class="btn btn-warning">Edit</a>
+            </td>
+            <td>
+                <form action="/admin/posts/{{id}}?_method=DELETE" method="POST">
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+
+            </td>
         </tr>
         {{/each}}
     </tbody>
