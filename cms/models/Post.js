@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const URLSlugs = require('mongoose-url-slugs');
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
@@ -8,6 +9,11 @@ const PostSchema = new Schema({
         type: String,
         trim: true,
         required: true
+    },
+
+    slug:{
+        type: String
+       
     },
 
     status:{
@@ -49,9 +55,16 @@ const PostSchema = new Schema({
     user:{
         type:Schema.Types.ObjectId,
         ref:'users'  
-      }
+    }
+
+
 
 }, {usePushEach: true});
 
+
+PostSchema.plugin(URLSlugs('title', {field: 'slug'}));
+
 module.exports = mongoose.model('Post', PostSchema);
+
+
 
