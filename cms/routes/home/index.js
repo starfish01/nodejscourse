@@ -18,16 +18,31 @@ router.all('/*', (req, res, next)=>{
 
 router.get('/', (req, res)=>{
 
+    const perPage =10;
+    const page = req.query.page || 1;
+
+
+
     Post.find({})
+
+        .skip((perPage * page) - perPage)
+        .limit(perPage)
         .populate('category')
         .then(posts=>{
-            res.render('home/index', {posts: posts});
+            Post.count.then(postCount=>{
+                res.render('home/index', {
+                    posts: posts, 
+                    current: parseInt(page),
+                    page: Math.ceil(postCount/ perPage)
+                });
+            })
+            
     });
 });
 
-router.get('/post/:id', (req, res)=>{
+router.get('/post/:slug', (req, res)=>{
 
-    Post.findOne({_id: req.params.id})
+    Post.findOne({slug: req.params.slug})
     .populate({path:'comments', match:{approveComment: true},populate:{path:'user', model: 'users'}})
     .populate('user')
     .then(post =>{

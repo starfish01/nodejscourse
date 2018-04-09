@@ -66,5 +66,3 @@ PostSchema.plugin(URLSlugs('title', {field: 'slug'}));
 
 module.exports = mongoose.model('Post', PostSchema);
 
-
-
