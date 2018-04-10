@@ -15,14 +15,26 @@ router.all('/*', userAuthenticated, (req, res, next) => {
 
 router.get('/', (req, res) => {
 
-    Post.count({}).then(postCount => {
-        User.count({}).then(userCount => {
-            Comment.count({}).then(commentCount => {
-                res.render('admin/index', { postCount: postCount, userCount: userCount, commentCount: commentCount });
-            })
-        })
+    const promises = [
+        Post.count().exec(),
+        User.count().exec(),
+        Comment.count().exec(),
+        Categories.count().exec()
+    ];
 
-    })
+    Promise.all(promises).then(([postCount, userCount, commentCount, categoriesCount])=>{
+        res.render('admin/index', { postCount: postCount, userCount: userCount, commentCount: commentCount,  categoriesCount:categoriesCount});
+    });
+
+
+    // Post.count({}).then(postCount => {
+    //     User.count({}).then(userCount => {
+    //         Comment.count({}).then(commentCount => {
+    //             res.render('admin/index', { postCount: postCount, userCount: userCount, commentCount: commentCount });
+    //         })
+    //     })
+
+    // })
 
 });
 
@@ -43,7 +55,7 @@ router.post('/generate-fake-posts', (req, res) => {
         return cat;
     
     }).then(cat=>{
-        console.log(cat)
+       
 
             for (let index = 0; index < req.body.numberOfLoops; index++) {
 
@@ -58,17 +70,15 @@ router.post('/generate-fake-posts', (req, res) => {
         
                 newPost.save(function (err) {
                     if (err) throw err;
-        
                 })
             }
-            res.redirect('/admin');
 
     }).catch(err=>{
+        
         console.log(err)
     })
 
-    
-    
+    res.redirect('/admin');
 
 
     

@@ -29,11 +29,11 @@ router.get('/', (req, res)=>{
         .limit(perPage)
         .populate('category')
         .then(posts=>{
-            Post.count.then(postCount=>{
+            Post.count().then(postCount=>{
                 res.render('home/index', {
                     posts: posts, 
                     current: parseInt(page),
-                    page: Math.ceil(postCount/ perPage)
+                    pages: Math.ceil(postCount/ perPage)
                 });
             })
             

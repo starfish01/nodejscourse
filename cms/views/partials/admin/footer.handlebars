@@ -44,10 +44,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ["Posts", "Users", "Comments"],
+        labels: ["Posts", "Users", "Comments", "Categories"],
         datasets: [{
-            label: '# of Votes',
-            data: [{{postCount}}, {{userCount}}, {{commentCount}}, 5, 2, 3],
+            label: 'Information',
+            data: [{{postCount}}, {{userCount}}, {{commentCount}}, {{categoriesCount}}, 2, 3],
 
 
             backgroundColor: [
